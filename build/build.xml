@@ -1,0 +1,68 @@
+<project name="FddReport" default="release" basedir=".">
+ 
+  <!-- set global properties for this build -->
+  <property name="src.dir" location="../src"/>
+  <property name="java.dir" location="${src.dir}/java"/>
+  <property name="tmp.dir" location="../tmp"/>
+  <property name="class.dir"  location="../classes"/>
+  <property name="release.dir"  location="../release"/>
+  <property name="lib.dir"  location="../lib"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${tmp.dir}"/>
+	<mkdir dir="${class.dir}"/>
+	<mkdir dir="${release.dir}"/>
+  </target>
+
+  <target name="compile" depends="init"
+        description="compile the source " >
+		
+    <javac srcdir="${java.dir}" destdir="${class.dir}" target="1.6">
+	  <classpath>
+        <fileset dir="${lib.dir}">
+          <include name="**/*.jar"/>
+        </fileset>
+	  </classpath>
+	</javac>
+  </target>
+
+  <target name="release" depends="clean,compile"
+        description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${tmp.dir}/files"/>
+	
+	<copy todir="${tmp.dir}/files">
+      <fileset dir="${class.dir}"/>
+	  <fileset dir="${java.dir}">
+	    <include name="res/**/*"/>
+	  </fileset>
+    </copy>
+	
+	<unzip dest="${tmp.dir}/files">
+		<patternset>
+			<include name="**/*"/>
+			<exclude name="META-INF/*"/>
+		</patternset>
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>			
+		</fileset>
+    </unzip>
+
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <jar jarfile="${release.dir}\FddReportGenerator-${DSTAMP}.jar" basedir="${tmp.dir}/files">
+	  <manifest>
+        <attribute name="Main-Class" value="com.rabidgremlin.fddreport.gui.FddReportGui"/>
+      </manifest>
+	</jar>
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <delete dir="${tmp.dir}"/>
+    <delete dir="${class.dir}"/>
+	<delete dir="${release.dir}"/>
+  </target>
+</project>
