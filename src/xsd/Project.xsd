@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns:tns="http://fddreport.rabidgremlin.com/Project/"
+	xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://fddreport.rabidgremlin.com/Project/">
+	<element name="Project">
+		<complexType>
+			<sequence>
+				<element name="FeatureSets">
+					<complexType>
+						<sequence minOccurs="1" maxOccurs="unbounded">
+							<element name="FeatureSet">
+								<complexType>
+									<attribute name="FeatureSetId" type="ID" use="required" />
+									<attribute name="Name" type="string" use="required" />
+								</complexType>
+							</element>
+						</sequence>
+					</complexType>
+				</element>
+				<element name="Features">
+					<complexType>
+						<sequence minOccurs="1" maxOccurs="unbounded">
+							<element name="Feature">
+								<complexType>
+									<attribute name="Name" type="string" use="required" />
+									<attribute name="FeatureSet" type="IDREF" id="FeatureSetId"
+										use="required" />
+									<attribute name="DomainWalkthroughPlanned" type="date"
+										use="optional" />
+									<attribute name="DomainWalkthroughActual" type="date"
+										use="optional" />
+									<attribute name="DesignPlanned" type="date" use="optional" />
+									<attribute name="DesignActual" type="date" use="optional" />
+									<attribute name="DesignReviewPlanned" type="date"
+										use="optional" />
+									<attribute name="DesignReviewActual" type="date" use="optional" />
+									<attribute name="CodePlanned" type="date" use="optional" />
+									<attribute name="CodeActual" type="date" use="optional" />
+									<attribute name="CodeReviewPlanned" type="date" use="optional" />
+									<attribute name="CodeReviewActual" type="date" use="optional" />
+									<attribute name="PromoteToBuildPlanned" type="date"
+										use="required" />
+									<attribute name="PromoteToBuildActual" type="date"
+										use="optional" />
+								</complexType>
+							</element>
+						</sequence>
+					</complexType>
+				</element>
+
+			</sequence>
+			<attribute name="ProjectName" type="string" use="required" />
+			<attribute name="StartDate" type="date" use="required" />
+		</complexType>
+	</element>
+</schema>
