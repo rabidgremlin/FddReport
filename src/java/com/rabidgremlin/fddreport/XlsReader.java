@@ -57,6 +57,12 @@ public class XlsReader
       
       Feature feature = new Feature();
       feature.setName(currentRow.getCell(0).getStringCellValue());
+      
+      if (!cellNotBlank(currentRow,12))
+      {
+        throw new Exception("Promote to build date must be specified for feature '" + feature.getName() +"' on row " + rowCount);
+      }
+      
       feature.setPromoteToBuildPlanned(makeXMLDate(currentRow.getCell(12).getDateCellValue()));
       
       if (cellNotBlank(currentRow,2))

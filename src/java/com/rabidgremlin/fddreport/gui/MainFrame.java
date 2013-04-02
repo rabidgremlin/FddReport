@@ -278,6 +278,7 @@ public class MainFrame extends JFrame
         }
         catch (Exception e)
         {
+		  e.printStackTrace();
           JOptionPane.showMessageDialog(MainFrame.this.getContentPane(), "Error generating report: " + e.getMessage(), "Error",
               JOptionPane.ERROR_MESSAGE);
           close(1);
